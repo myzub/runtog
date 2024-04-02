@@ -22,5 +22,5 @@ public class EventDto {
     private String photoUrl;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
-//    private Club club;
+    private Club club;
 }
