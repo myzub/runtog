@@ -1,32 +1,33 @@
 package com.runtog.web.models;
 
-import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
-@Table(name = "clubs")
-public class Club {
+@Table
+public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
+    private String name;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private String type;
     private String photoUrl;
-    private String content;
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
 
-    @OneToMany(mappedBy = "club", cascade = CascadeType.REMOVE)
-    private List<Event> events = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "club_id", nullable = false)
+    private Club club;
 }
