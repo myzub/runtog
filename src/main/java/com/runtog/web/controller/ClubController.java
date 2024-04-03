@@ -4,7 +4,6 @@ import com.runtog.web.dto.ClubDto;
 import com.runtog.web.models.Club;
 import com.runtog.web.service.ClubService;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

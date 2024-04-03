@@ -3,7 +3,10 @@ package com.runtog.web.service.impl;
 import com.runtog.web.dto.ClubDto;
 import com.runtog.web.mapper.ClubMapper;
 import com.runtog.web.models.Club;
+import com.runtog.web.models.UserEntity;
 import com.runtog.web.repository.ClubRepository;
+import com.runtog.web.repository.UserRepository;
+import com.runtog.web.security.SecurityUtil;
 import com.runtog.web.service.ClubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,7 @@ import static com.runtog.web.mapper.ClubMapper.mapToClubDto;
 @Service
 public class ClubServiceImpl implements ClubService {
     private ClubRepository clubRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public ClubServiceImpl(ClubRepository clubRepository) {
@@ -31,7 +35,10 @@ public class ClubServiceImpl implements ClubService {
 
     @Override
     public void updateClub(ClubDto clubDto) {
+        String username = SecurityUtil.getSessionUser();
+        UserEntity user = userRepository.findByUsername(username);
         Club club = mapToClub(clubDto);
+        club.setCreatedBy(user);
         clubRepository.save(club);
     }
 
@@ -54,7 +61,11 @@ public class ClubServiceImpl implements ClubService {
 
     @Override
     public Club saveClub(ClubDto clubDto) {
+        String username = SecurityUtil.getSessionUser();
+        UserEntity user = userRepository.findByUsername(username);
         Club club = mapToClub(clubDto);
+
+        club.setCreatedBy(user);
         return clubRepository.save(club);
     }
 }
